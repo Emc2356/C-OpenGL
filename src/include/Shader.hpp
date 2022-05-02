@@ -60,7 +60,7 @@ private:
 class Shader {
 public:
     Shader(const std::string& vertex_source, const std::string& fragment_source);
-    ~Shader();
+    ~Shader(); 
     void bind() const;
     void unbind() const;
     
