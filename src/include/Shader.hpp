@@ -3,7 +3,8 @@
 #include <unordered_map>
 #include <glad/glad.h>
 
-#if 0
+// just to make the lint shut up
+#ifdef NOT_DEFINED
 #include <optional>
 #else
 #include <experimental/optional>

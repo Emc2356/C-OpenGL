@@ -2,6 +2,10 @@
 #include <GLFW/glfw3.h>
 #include <stdio.h>
 
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -54,6 +58,11 @@ int main() {
         exit(1);
 	}
 
+    ImGui::CreateContext();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 450");
+    ImGui::StyleColorsDark();
+
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
     glDebugMessageCallback(MessageCallback, 0);
@@ -76,9 +85,6 @@ int main() {
 
     glm::mat4 proj = glm::ortho<float>(0, WIDTH, 0, HEIGHT, -1, 1);
     glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200, 200, 0));
-
-    glm::mat4 mvp = proj * view * model;
 
     Shader shader = Shader(read_file("shaders/shader.vert"), read_file("shaders/shader.frag"));
     Texture texture = Texture("resources/avatar.png", false);
@@ -98,9 +104,28 @@ int main() {
     float time = 0;
 
 	while (!glfwWindowShouldClose(window)) {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
         shader.bind();
         ibo.bind();
         vao.bind();
+
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        float xt;
+        float yt;
+        {
+            ImGui::SliderFloat("x translate", &xt, -200.0f, 200.0f);
+            ImGui::SliderFloat("y translate", &yt, -200.0f, 200.0f);
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        }
+
+        
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(xt, yt, 0));
+
+        glm::mat4 mvp = proj * view * model;
 
         shader.set_uniform("iTime", time);
         shader.set_uniform("iMVP", mvp);
@@ -108,7 +133,11 @@ int main() {
         texture.bind(1);
         shader.set_uniform("iTexture", 1);
 
+        ImGui::Render();
+
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -116,6 +145,11 @@ int main() {
         time += 0.005f;
 	}
 
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
+    glfwDestroyWindow(window);
 	glfwTerminate();
 	return 0;
 }
