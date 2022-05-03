@@ -14,17 +14,15 @@ LIB_DIRS = -L./Dependencies/GLFW32/lib-mingw-w64/
 BASE_CMD = $(CC) $(CFLAGS) $(INCLUDES) $(LIB_DIRS)
 ALL_OBJ_FILES = ./obj-files/glad.obj ./obj-files/stb_image.obj ./obj-files/glMessageCallback.obj \
 			    ./obj-files/IndexBuffer.obj ./obj-files/Shader.obj ./obj-files/Texture.obj \
-				./obj-files/VertexArray.obj ./obj-files/VertexBuffer.obj
+				./obj-files/VertexArray.obj ./obj-files/VertexBuffer.obj ./obj-files/main.obj
 
 ALL_LABELS = ./obj-files/glad.obj ./obj-files/stb_image.obj ./obj-files/glMessageCallback.obj \
 		     ./obj-files/IndexBuffer.obj ./obj-files/Shader.obj ./obj-files/Texture.obj  \
-			 ./obj-files/VertexArray.obj ./obj-files/VertexBuffer.obj
+			 ./obj-files/VertexArray.obj ./obj-files/VertexBuffer.obj ./obj-files/main.obj
 
-# initialize:
-# 	mkdir obj-files
 
 main.exe: $(ALL_LABELS)
-	$(BASE_CMD) -o main.exe src/main.cpp $(ALL_OBJ_FILES) $(LIBS)
+	$(BASE_CMD) -o main.exe $(ALL_OBJ_FILES) $(LIBS)
 
 ./obj-files/glad.obj: 
 	$(BASE_CMD) -c -o ./obj-files/glad.obj Dependencies/glad/src/glad.cpp
@@ -32,7 +30,10 @@ main.exe: $(ALL_LABELS)
 ./obj-files/stb_image.obj: Dependencies/stb/stb_image.cpp Dependencies/stb/stb_image.h
 	$(BASE_CMD) -c -o ./obj-files/stb_image.obj Dependencies/stb/stb_image.cpp
 
-./obj-files/glMessageCallback.obj: src/include/glMessageCallback.hpp
+./obj-files/main.obj: src/main.cpp
+	$(BASE_CMD) -c -o ./obj-files/main.obj src/main.cpp
+
+./obj-files/glMessageCallback.obj: src/include/glMessageCallback.hpp src/glMessageCallback.cpp
 	$(BASE_CMD) -c -o ./obj-files/glMessageCallback.obj src/glMessageCallback.cpp
 
 ./obj-files/IndexBuffer.obj: src/IndexBuffer.cpp src/include/IndexBuffer.hpp

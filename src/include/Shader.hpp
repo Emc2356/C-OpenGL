@@ -47,6 +47,7 @@ public:
     inline void set_uniform(const glm::dvec2& v) const { glUniform2d(location, v.x, v.y); }
     inline void set_uniform(const glm::dvec3& v) const { glUniform3d(location, v.x, v.y, v.z); }
     inline void set_uniform(const glm::dvec4& v) const { glUniform4d(location, v.x, v.y, v.z, v.w); }
+    inline void set_uniform(const glm::dmat4& v) const { glUniformMatrix4dv(location, 1, GL_FALSE, glm::value_ptr(v)); }
     inline void set_uniform(const uint32_t&   v) const { glUniform1ui(location, v); }
     inline void set_uniform(const glm::uvec2& v) const { glUniform2ui(location, v.x, v.y); }
     inline void set_uniform(const glm::uvec3& v) const { glUniform3ui(location, v.x, v.y, v.z); }
@@ -65,9 +66,12 @@ public:
     void unbind() const;
     
     template<typename T>
-    bool set_uniform(const std::string& key, const T& value) {
+    bool set_uniform(const std::string& key, const T& value, const bool debug=false) {
         bool found = m_uniforms.find(key) != m_uniforms.end();
         if (!found) {
+            if (debug) {
+                printf("`%s` uniform doesnt exist!\n", key.c_str());
+            }
             return false;
         }
         bind();

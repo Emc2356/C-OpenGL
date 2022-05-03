@@ -6,15 +6,11 @@
 
 class IndexBuffer {
 public:
-    IndexBuffer(unsigned int* data, uint32_t count, unsigned int usage);
-    IndexBuffer(unsigned int* data, uint32_t count);
-    IndexBuffer(std::vector<unsigned int> data, unsigned int usage);
-    IndexBuffer(std::vector<unsigned int> data);
+    IndexBuffer(unsigned int* data, uint32_t count, unsigned int usage=GL_STATIC_DRAW);
+    IndexBuffer(std::vector<unsigned int> data, unsigned int usage=GL_STATIC_DRAW);
     ~IndexBuffer();
-    void update_buffer(unsigned int* data, uint32_t size, uint32_t offset);
-    void update_buffer(unsigned int* data, uint32_t size);
-    void update_buffer(std::vector<unsigned int> data, uint32_t offset);
-    void update_buffer(std::vector<unsigned int> data);
+    void update_buffer(unsigned int* data, uint32_t size, uint32_t offset=0);
+    void update_buffer(std::vector<unsigned int> data, uint32_t offset=0);
     void bind() const;
     void unbind() const;
     uint32_t get_count();

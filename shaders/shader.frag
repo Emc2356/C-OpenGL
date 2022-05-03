@@ -16,4 +16,5 @@ void main() {
     // FragColor = vec4(1.0, 0.0, 0.0, 1.0);
     // FragColor = vec4(1.0, (sin(iTime) + 1) / 2, (sin(iTime + 0.5) + 1) / 2, 1.0);
     FragColor = texture(iTexture, textCoord);
+    // FragColor = vec4(1.0f);
 }

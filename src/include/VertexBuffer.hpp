@@ -6,15 +6,11 @@
 
 class VertexBuffer {
 public:
-    VertexBuffer(float* data, uint32_t count, unsigned int usage);
-    VertexBuffer(float* data, uint32_t count);
-    VertexBuffer(std::vector<float> data, unsigned int usage);
-    VertexBuffer(std::vector<float> data);
+    VertexBuffer(float* data, uint32_t count, unsigned int usage=GL_STATIC_DRAW);
+    VertexBuffer(std::vector<float> data, unsigned int usage=GL_STATIC_DRAW);
     ~VertexBuffer();
-    void update_buffer(float* data, uint32_t size, uint32_t offset) ;
-    void update_buffer(float* data, uint32_t size);
-    void update_buffer(std::vector<float> data, uint32_t offset);
-    void update_buffer(std::vector<float> data);
+    void update_buffer(float* data, uint32_t size, uint32_t offset=0);
+    void update_buffer(std::vector<float> data, uint32_t offset=0);
     void bind() const;
     void unbind() const;
     uint32_t get_count();

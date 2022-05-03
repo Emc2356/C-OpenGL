@@ -5,7 +5,7 @@
 
 class Texture {
 public:
-    Texture(const std::string& filepath);
+    Texture(const std::string& filepath, bool flipped=false);
     ~Texture();
 
     inline int get_width() const { return m_width; }

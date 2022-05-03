@@ -2,7 +2,7 @@
 #include <glad/glad.h>
 #include <stb_image.h>
 
-Texture::Texture(const std::string& filepath) {
+Texture::Texture(const std::string& filepath, bool flipped/*false*/) {
     m_RendererID = 0;
     m_filepath = filepath;
     m_local_buffer = nullptr;
@@ -10,7 +10,7 @@ Texture::Texture(const std::string& filepath) {
     m_height = 0;
     m_BPP = 0;
 
-    stbi_set_flip_vertically_on_load(1);
+    stbi_set_flip_vertically_on_load(flipped ? 1 : 0);
     m_local_buffer = stbi_load(m_filepath.c_str(), &m_width, &m_height, &m_BPP, 4);
 
     glGenTextures(1, &m_RendererID);

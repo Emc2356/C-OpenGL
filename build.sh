@@ -1,1 +1,1 @@
-"make -j8 && main.exe" 
+make -j8 && main.exe
