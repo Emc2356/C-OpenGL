@@ -8,6 +8,7 @@ IndexBuffer::IndexBuffer(unsigned int* data, uint32_t count, unsigned int usage/
 
     m_count = count;
     m_nbytes = count * sizeof(unsigned int);
+    m_type = GL_UNSIGNED_INT;
 }
 
 IndexBuffer::IndexBuffer(std::vector<unsigned int> data, unsigned int usage/*=GL_STATIC_DRAW*/) {
@@ -17,10 +18,15 @@ IndexBuffer::IndexBuffer(std::vector<unsigned int> data, unsigned int usage/*=GL
 
     m_count = data.size();
     m_nbytes = data.size() * sizeof(unsigned int);
+    m_type = GL_UNSIGNED_INT;
 }
 
-uint32_t IndexBuffer::get_count() {
+uint32_t IndexBuffer::get_count() const {
     return m_count;
+}
+
+unsigned int IndexBuffer::get_type() const { 
+    return m_type;
 }
 
 IndexBuffer::~IndexBuffer() {

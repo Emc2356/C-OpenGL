@@ -13,6 +13,7 @@
 #include "VertexArray.hpp"
 #include "VertexBuffer.hpp"
 #include "IndexBuffer.hpp"
+#include "Renderer.hpp"
 #include "Texture.hpp"
 #include "Shader.hpp"
 #include "utils.hpp"
@@ -50,6 +51,7 @@ GLFWwindow* create_window(int width, int height, const char* title) {
 
 
 int main() {
+    // glfwSetErrorCallback([](int error, const char* description) -> void { fprintf(stderr, "Glfw Error %d: %s\n", error, description); });
     glfwInit();
 	GLFWwindow* window = create_window(WIDTH, HEIGHT, TITLE);
 
@@ -58,10 +60,7 @@ int main() {
         exit(1);
 	}
 
-    ImGui::CreateContext();
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 450");
-    ImGui::StyleColorsDark();
+    Renderer renderer = Renderer(450, window);
 
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -72,10 +71,10 @@ int main() {
 
    std::vector<float> vertices = {
         // x, y, z, u, v
-        +000.0f, +000.0f, +0.0f, 0.0f, 1.0f - 0.0f,
-        +500.0f, +000.0f, +0.0f, 1.0f, 1.0f - 0.0f,
-        +500.0f, +500.0f, +0.0f, 1.0f, 1.0f - 1.0f,
-        +000.0f, +500.0f, +0.0f, 0.0f, 1.0f - 1.0f 
+        -50.0f, -50.0f, +0.0f, 0.0f, 1.0f - 0.0f,
+        +50.0f, -50.0f, +0.0f, 1.0f, 1.0f - 0.0f,
+        +50.0f, +50.0f, +0.0f, 1.0f, 1.0f - 1.0f,
+        -50.0f, +50.0f, +0.0f, 0.0f, 1.0f - 1.0f 
     };
     
     std::vector<unsigned int> indices = {  
@@ -84,10 +83,10 @@ int main() {
     };
 
     glm::mat4 proj = glm::ortho<float>(0, WIDTH, 0, HEIGHT, -1, 1);
-    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
+    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(50, 50, 0));
 
     Shader shader = Shader(read_file("shaders/shader.vert"), read_file("shaders/shader.frag"));
-    Texture texture = Texture("resources/avatar.png", false);
+    Texture texture = Texture("resources/avatar-100.png", false);
     VertexBuffer vbo = VertexBuffer(vertices, GL_STATIC_DRAW);
     IndexBuffer ibo = IndexBuffer(indices, GL_STATIC_DRAW);
     VertexArray vao;
@@ -104,22 +103,21 @@ int main() {
     float time = 0;
 
 	while (!glfwWindowShouldClose(window)) {
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
+        renderer.start_frame();
+        renderer.clear();
 
         shader.bind();
         ibo.bind();
         vao.bind();
 
-        glClear(GL_COLOR_BUFFER_BIT);
-
         float xt;
         float yt;
         {
-            ImGui::SliderFloat("x translate", &xt, -200.0f, 200.0f);
-            ImGui::SliderFloat("y translate", &yt, -200.0f, 200.0f);
+            ImGui::Begin("debug");
+            ImGui::SliderFloat("x translate", &xt, 0.0f, WIDTH - 100);
+            ImGui::SliderFloat("y translate", &yt, 0.0f, HEIGHT - 100);
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+            ImGui::End();
         }
 
         
@@ -135,19 +133,15 @@ int main() {
 
         ImGui::Render();
 
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        renderer.draw(ibo, vao, shader, GL_TRIANGLES);
 
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        renderer.end_frame();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
         time += 0.005f;
 	}
-
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
 
     glfwDestroyWindow(window);
 	glfwTerminate();

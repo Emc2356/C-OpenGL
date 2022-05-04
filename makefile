@@ -16,12 +16,12 @@ BASE_CMD = $(CC) $(CFLAGS) $(INCLUDES) $(LIB_DIRS)
 ALL_OBJ_FILES = ./obj-files/glad.obj ./obj-files/stb_image.obj ./obj-files/glMessageCallback.obj \
 			    ./obj-files/IndexBuffer.obj ./obj-files/Shader.obj ./obj-files/Texture.obj \
 				./obj-files/VertexArray.obj ./obj-files/VertexBuffer.obj ./obj-files/main.obj \
-				./Dependencies/ImGui/libimgui.a
+				./obj-files/Renderer.obj
 
 ALL_LABELS = ./obj-files/glad.obj ./obj-files/stb_image.obj ./obj-files/glMessageCallback.obj \
 		     ./obj-files/IndexBuffer.obj ./obj-files/Shader.obj ./obj-files/Texture.obj  \
 			 ./obj-files/VertexArray.obj ./obj-files/VertexBuffer.obj ./obj-files/main.obj \
-			 ./Dependencies/ImGui/libimgui.a
+			 ./Dependencies/ImGui/libimgui.a ./obj-files/Renderer.obj
 
 
 main.exe: $(ALL_LABELS)
@@ -35,6 +35,9 @@ main.exe: $(ALL_LABELS)
 
 ./obj-files/main.obj: src/main.cpp
 	$(BASE_CMD) -c -o ./obj-files/main.obj src/main.cpp
+
+./obj-files/Renderer.obj: src/Renderer.cpp
+	$(BASE_CMD) -c -o ./obj-files/Renderer.obj src/Renderer.cpp
 
 ./obj-files/glMessageCallback.obj: src/include/glMessageCallback.hpp src/glMessageCallback.cpp
 	$(BASE_CMD) -c -o ./obj-files/glMessageCallback.obj src/glMessageCallback.cpp
@@ -54,54 +57,9 @@ main.exe: $(ALL_LABELS)
 ./obj-files/VertexBuffer.obj: src/VertexBuffer.cpp src/include/VertexBuffer.hpp
 	$(BASE_CMD) -c -o ./obj-files/VertexBuffer.obj src/VertexBuffer.cpp
 
-
-./obj-files/imgui.obj:
-	$(BASE_CMD) -c -o ./obj-files/imgui.obj ./Dependencies/ImGui/imgui.cpp
-
-./obj-files/imgui_impl_glfw.obj:
-	$(BASE_CMD) -c -o ./obj-files/imgui_impl_glfw.obj ./dependencies/ImGui/imgui_impl_glfw.cpp
-
-./obj-files/imgui_impl_opengl3.obj:
-	$(BASE_CMD) -c -o ./obj-files/imgui_impl_opengl3.obj ./dependencies/ImGui/imgui_impl_opengl3.cpp
-
-./obj-files/imgui_tables.obj:
-	$(BASE_CMD) -c -o ./obj-files/imgui_tables.obj ./dependencies/ImGui/imgui_tables.cpp
-
-./obj-files/imgui_widgets.obj:
-	$(BASE_CMD) -c -o ./obj-files/imgui_widgets.obj ./dependencies/ImGui/imgui_widgets.cpp
-
-./obj-files/imgui_draw.obj: 
-	$(BASE_CMD) -c -o ./obj-files/imgui_draw.obj ./dependencies/ImGui/imgui_draw.cpp
-
-
-./Dependencies/ImGui/libimgui.a:    ./Dependencies/ImGui/imconfig.h \
-									./Dependencies/ImGui/imgui.cpp \
-									./Dependencies/ImGui/imgui.h \
-									./Dependencies/ImGui/imgui_internal.h \
-									./Dependencies/ImGui/imgui_demo.cpp \
-									./Dependencies/ImGui/imgui_draw.cpp \
-									./Dependencies/ImGui/imgui_impl_glfw.cpp \
-									./Dependencies/ImGui/imgui_impl_glfw.h \
-									./Dependencies/ImGui/imgui_impl_opengl3.cpp \
-									./Dependencies/ImGui/imgui_impl_opengl3.h \
-									./Dependencies/ImGui/imgui_impl_opengl3_loader.h \
-									./Dependencies/ImGui/imgui_tables.cpp \
-									./Dependencies/ImGui/imgui_widgets.cpp \
-									./Dependencies/ImGui/imstb_rectpack.h \
-									./Dependencies/ImGui/imstb_textedit.h \
-									./Dependencies/ImGui/imstb_truetype.h \
-									./obj-files/imgui.obj \
-									./obj-files/imgui_impl_glfw.obj \
-									./obj-files/imgui_impl_opengl3.obj \
-									./obj-files/imgui_tables.obj \
-									./obj-files/imgui_widgets.obj \
-									./obj-files/imgui_draw.obj 
-
-	ar cr ./Dependencies/ImGui/libimgui.a ./obj-files/imgui.obj ./obj-files/imgui_impl_glfw.obj ./obj-files/imgui_impl_opengl3.obj ./obj-files/imgui_tables.obj ./obj-files/imgui_widgets.obj ./obj-files/imgui_draw.obj
-
-#   $(BASE_CMD) -c -o ./obj-files/imgui_demo.obj ./dependencies/ImGui/imgui_demo.cpp
-#   $(BASE_CMD) -c -o ./obj-files/imgui_draw.obj ./dependencies/ImGui/imgui_draw.cpp
+include makefiles/imgui.in
 
 clean:
 	rm -rf ./obj-files/
 	rm main.exe
+	rm Dependencies/imgui.libimgui.a

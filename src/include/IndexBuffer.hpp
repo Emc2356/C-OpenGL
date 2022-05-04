@@ -13,9 +13,11 @@ public:
     void update_buffer(std::vector<unsigned int> data, uint32_t offset=0);
     void bind() const;
     void unbind() const;
-    uint32_t get_count();
+    uint32_t get_count() const;
+    unsigned int get_type() const;
 private:
     unsigned int m_RendererID;
+    unsigned int m_type;
     uint32_t m_count;
     uint32_t m_nbytes;
 };
