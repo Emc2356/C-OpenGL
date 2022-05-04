@@ -1,40 +1,40 @@
 ./obj-files/imgui.obj:
-	$(BASE_CMD) -c -o ./obj-files/imgui.obj ./Dependencies/ImGui/imgui.cpp
+	$(BASE_CMD) -c -o ./obj-files/imgui.obj ./Dependencies/ImGui/src/imgui.cpp
 
 ./obj-files/imgui_impl_glfw.obj:
-	$(BASE_CMD) -c -o ./obj-files/imgui_impl_glfw.obj ./dependencies/ImGui/imgui_impl_glfw.cpp
+	$(BASE_CMD) -c -o ./obj-files/imgui_impl_glfw.obj ./dependencies/ImGui/src/imgui_impl_glfw.cpp
 
 ./obj-files/imgui_impl_opengl3.obj:
-	$(BASE_CMD) -c -o ./obj-files/imgui_impl_opengl3.obj ./dependencies/ImGui/imgui_impl_opengl3.cpp
+	$(BASE_CMD) -c -o ./obj-files/imgui_impl_opengl3.obj ./dependencies/ImGui/src/imgui_impl_opengl3.cpp
 
 ./obj-files/imgui_tables.obj:
-	$(BASE_CMD) -c -o ./obj-files/imgui_tables.obj ./dependencies/ImGui/imgui_tables.cpp
+	$(BASE_CMD) -c -o ./obj-files/imgui_tables.obj ./dependencies/ImGui/src/imgui_tables.cpp
 
 ./obj-files/imgui_widgets.obj:
-	$(BASE_CMD) -c -o ./obj-files/imgui_widgets.obj ./dependencies/ImGui/imgui_widgets.cpp
+	$(BASE_CMD) -c -o ./obj-files/imgui_widgets.obj ./dependencies/ImGui/src/imgui_widgets.cpp
 
 ./obj-files/imgui_draw.obj: 
-	$(BASE_CMD) -c -o ./obj-files/imgui_draw.obj ./dependencies/ImGui/imgui_draw.cpp
+	$(BASE_CMD) -c -o ./obj-files/imgui_draw.obj ./dependencies/ImGui/src/imgui_draw.cpp
 
 ./obj-files/imgui_demo.obj: 
-	$(BASE_CMD) -c -o ./obj-files/imgui_demo.obj ./dependencies/ImGui/imgui_demo.cpp
+	$(BASE_CMD) -c -o ./obj-files/imgui_demo.obj ./dependencies/ImGui/src/imgui_demo.cpp
 
-./Dependencies/ImGui/libimgui.a:    ./Dependencies/ImGui/imconfig.h \
-									./Dependencies/ImGui/imgui.cpp \
-									./Dependencies/ImGui/imgui.h \
-									./Dependencies/ImGui/imgui_internal.h \
-									./Dependencies/ImGui/imgui_demo.cpp \
-									./Dependencies/ImGui/imgui_draw.cpp \
-									./Dependencies/ImGui/imgui_impl_glfw.cpp \
-									./Dependencies/ImGui/imgui_impl_glfw.h \
-									./Dependencies/ImGui/imgui_impl_opengl3.cpp \
-									./Dependencies/ImGui/imgui_impl_opengl3.h \
-									./Dependencies/ImGui/imgui_impl_opengl3_loader.h \
-									./Dependencies/ImGui/imgui_tables.cpp \
-									./Dependencies/ImGui/imgui_widgets.cpp \
-									./Dependencies/ImGui/imstb_rectpack.h \
-									./Dependencies/ImGui/imstb_textedit.h \
-									./Dependencies/ImGui/imstb_truetype.h \
+./Dependencies/ImGui/libimgui.a:    ./Dependencies/ImGui/include/imgui/imconfig.h \
+									./Dependencies/ImGui/src/imgui.cpp \
+									./Dependencies/ImGui/include/imgui/imgui.h \
+									./Dependencies/ImGui/include/imgui/imgui_internal.h \
+									./Dependencies/ImGui/src/imgui_demo.cpp \
+									./Dependencies/ImGui/src/imgui_draw.cpp \
+									./Dependencies/ImGui/src/imgui_impl_glfw.cpp \
+									./Dependencies/ImGui/include/imgui/imgui_impl_glfw.h \
+									./Dependencies/ImGui/src/imgui_impl_opengl3.cpp \
+									./Dependencies/ImGui/include/imgui/imgui_impl_opengl3.h \
+									./Dependencies/ImGui/include/imgui/imgui_impl_opengl3_loader.h \
+									./Dependencies/ImGui/src/imgui_tables.cpp \
+									./Dependencies/ImGui/src/imgui_widgets.cpp \
+									./Dependencies/ImGui/include/imgui/imstb_rectpack.h \
+									./Dependencies/ImGui/include/imgui/imstb_textedit.h \
+									./Dependencies/ImGui/include/imgui/imstb_truetype.h \
 									./obj-files/imgui.obj \
 									./obj-files/imgui_impl_glfw.obj \
 									./obj-files/imgui_impl_opengl3.obj \

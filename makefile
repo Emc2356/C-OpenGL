@@ -7,10 +7,10 @@ CFLAGS = -Wall -Werror -Wextra -pedantic --std=c++$(CPP_STANDARD) -O3 \
 
 INCLUDES = -I./src/ -I./src/include/ -I./Dependencies/GLFW32/include/ \
 		   -I./Dependencies/glm/ -I./Dependencies/glad/include/ -I./Dependencies/stb/ \
-		   -I./Dependencies/ImGui
+		   -I./Dependencies/ImGui/include
 
 LIBS = -lglfw3 -limgui -lopengl32 -lgdi32 -luser32 -lshell32 -lkernel32
-LIB_DIRS = -L./Dependencies/GLFW32/lib-mingw-w64/ -L./Dependencies/ImGui
+LIB_DIRS = -L./Dependencies/GLFW32/lib-mingw-w64/ -L./Dependencies/ImGui/lib
 
 BASE_CMD = $(CC) $(CFLAGS) $(INCLUDES) $(LIB_DIRS)
 ALL_OBJ_FILES = ./obj-files/glad.obj ./obj-files/stb_image.obj ./obj-files/glMessageCallback.obj \
