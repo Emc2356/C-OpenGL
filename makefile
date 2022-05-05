@@ -14,12 +14,12 @@ LIB_DIRS = -L./Dependencies/GLFW32/lib-mingw-w64/ -L./Dependencies/ImGui/lib
 
 BASE_CMD = $(CC) $(CFLAGS) $(INCLUDES) $(LIB_DIRS)
 ALL_OBJ_FILES = ./obj-files/glad.obj ./obj-files/stb_image.obj ./obj-files/glMessageCallback.obj \
-			    ./obj-files/IndexBuffer.obj ./obj-files/Shader.obj ./obj-files/Texture.obj \
+			    ./obj-files/IndexBuffer.obj ./obj-files/Shader.obj ./obj-files/Texture2D.obj \
 				./obj-files/VertexArray.obj ./obj-files/VertexBuffer.obj ./obj-files/main.obj \
 				./obj-files/Renderer.obj
 
 ALL_LABELS = ./obj-files/glad.obj ./obj-files/stb_image.obj ./obj-files/glMessageCallback.obj \
-		     ./obj-files/IndexBuffer.obj ./obj-files/Shader.obj ./obj-files/Texture.obj  \
+		     ./obj-files/IndexBuffer.obj ./obj-files/Shader.obj ./obj-files/Texture2D.obj  \
 			 ./obj-files/VertexArray.obj ./obj-files/VertexBuffer.obj ./obj-files/main.obj \
 			 ./Dependencies/ImGui/libimgui.a ./obj-files/Renderer.obj
 
@@ -48,8 +48,8 @@ main.exe: $(ALL_LABELS)
 ./obj-files/Shader.obj: src/Shader.cpp src/include/Shader.hpp
 	$(BASE_CMD) -c -o ./obj-files/Shader.obj src/Shader.cpp
 
-./obj-files/Texture.obj: src/Texture.cpp src/include/Texture.hpp
-	$(BASE_CMD) -c -o ./obj-files/Texture.obj src/Texture.cpp
+./obj-files/Texture2D.obj: src/Texture2D.cpp src/include/Texture2D.hpp
+	$(BASE_CMD) -c -o ./obj-files/Texture2D.obj src/Texture2D.cpp
 	
 ./obj-files/VertexArray.obj: src/VertexBuffer.cpp src/include/VertexBuffer.hpp src/VertexArray.cpp src/include/VertexArray.hpp
 	$(BASE_CMD) -c -o ./obj-files/VertexArray.obj src/VertexArray.cpp

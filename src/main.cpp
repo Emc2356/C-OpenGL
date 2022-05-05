@@ -13,8 +13,8 @@
 #include "VertexArray.hpp"
 #include "VertexBuffer.hpp"
 #include "IndexBuffer.hpp"
+#include "Texture2D.hpp"
 #include "Renderer.hpp"
-#include "Texture.hpp"
 #include "Shader.hpp"
 #include "utils.hpp"
 
@@ -86,7 +86,10 @@ int main() {
     glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(50, 50, 0));
 
     Shader shader = Shader(read_file("shaders/shader.vert"), read_file("shaders/shader.frag"));
-    Texture texture = Texture("resources/avatar-100.png", false);
+    Texture2D texture = Texture2D("resources/avatar-100.png", false);
+    texture.set_filters(GL_LINEAR, GL_LINEAR);
+    texture.set_repeat_x(false);
+    texture.set_repeat_y(false);
     VertexBuffer vbo = VertexBuffer(vertices, GL_STATIC_DRAW);
     IndexBuffer ibo = IndexBuffer(indices, GL_STATIC_DRAW);
     VertexArray vao;
